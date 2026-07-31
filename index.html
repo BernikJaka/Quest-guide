@@ -615,7 +615,7 @@ const PINS = {
     m4:{x:66.43,y:70.22,name:'Assassin who killed Yong-Chun (Monster 4)'},
     m5:{x:50.69,y:21.33,name:'Heuk-Yong (Monster 5)'},
     m6:{x:56.33,y:25.44,name:'Dae-Ill (Monster 6)'},
-    m7:{x:59.05,y:45.37,name:'Enemy of Hyun-Woong (Monster 7)'},
+    m7:{x:57.05,y:36.09,name:'Enemy of Hyun-Woong (Monster 7)'},
     m8:{x:87.05,y:58.59,name:'Chief of Angry Doggebi Troop (Monster 8)'},
   },
   wildcargo: {
@@ -923,13 +923,10 @@ const QUESTS = [
    steps:[T("fort",13,"Talk"), A("Kill Devil Troop Of Jealousy for 100x \"Devil Troop of Jealousy’s Mask\""), T("fort",13,"Turn in")],
    reward:"~282,326 XP", item:[{f:"",n:"100x Devil Troop of Jealousy’s Mask"}], mob:[{f:"ms_m7_04.jpg",n:"Devil Troop Of Jealousy"}]}
 ]},
-{id:"s2-10", stageTitle:"Stage 23 — Hatred combo + Doggebi spirits", lvl:"Lv 44", where:"Out of town + Fort + Forsaken Fort.", combo:"Quest 41 + 42 both farm <b>Devil Troop Of Hatred</b> — one grind covers both.", quests:[
-  {name:"Quest 41", lvl:"Lv 44",
-   steps:[T("wild","p8","Talk"), A("Kill Devil Troop Of Hatred for \"Rope\""), T("wild","p8","Turn in")],
-   reward:"~203,850 XP", item:[{f:"41.png",n:"1x Rope"}], mob:[{f:"ms_m7_05.jpg",n:"Devil Troop Of Hatred"}]},
-  {name:"Quest 42", lvl:"Lv 44",
-   steps:[T("fort",14,"Talk"), A("Kill Devil Troop Of Hatred for 100x \"Devil Troop of Hatred’s Mask\" (same mob as Quest 41)"), T("fort",14,"Turn in")],
-   reward:"~339,750 XP", item:[{f:"",n:"100x Devil Troop of Hatred’s Mask"}], mob:[{f:"ms_m7_05.jpg",n:"Devil Troop Of Hatred"}]},
+{id:"s2-10", stageTitle:"Stage 23 — Hatred combo + Doggebi spirits", lvl:"Lv 44", where:"Out of town + Fort + Forsaken Fort.", quests:[
+  {name:"Quest 41 & 42", lvl:"Lv 44",
+   steps:[T("fort",14,"Talk"), T("wild","p8","Talk"), A("Kill Devil Troop Of Hatred for \"Rope\" + 100x \"Devil Troop of Hatred’s Mask\""), T("fort",14,"Turn in"), T("wild","p8","Turn in")],
+   reward:"~543,600 XP", item:[{f:"41.png",n:"1x Rope"}, {f:"",n:"100x Devil Troop of Hatred’s Mask"}], mob:[{f:"ms_m7_05.jpg",n:"Devil Troop Of Hatred"}]},
   {name:"Event Quest 16", lvl:"Lv 44",
    steps:[T("wild","p11","Talk"), A("Kill different Doggebis for their Spirit"), T("wild","p11","Turn in")],
    reward:"~169,875 XP",

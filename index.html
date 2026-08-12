@@ -839,17 +839,14 @@ const QUESTS = [
    reward:"28,510 XP, 1 Skill Point, 1 Contribution Point", item:[{f:"23.png",n:"40x Demon Mad Knight Head"}], mob:[{f:"ms_m3_10.jpg",n:"Demon Mad Knight"}]}
 ]},
 {id:"s2-2", stageTitle:"Stage 15 — Job Change #1 + Trinket’s Quest", lvl:"Lv 30", where:"Geum-Oh Mine, then the Fort — this is a big milestone stage.", combo:"Event Quest 8 = <b>1st Job Change</b>, do it at 30. You only need 1x Demon Commander’s Head — Quest 27 (Stage 16) needs a different drop from the same mob, so no need to stock up.", quests:[
-  {name:"Quest 24", lvl:"Lv 30",
-   steps:[T("fort",51,"Talk"), T("wild","p7","Talk"), A("Find \"Moon-Hee’s Doll\" from Castoff Baby Ghost"), T("wild","p7","Turn in")],
-   reward:"~30,000 XP, 1 Contribution Point", item:[{f:"24.png",n:"1x Moon-Hee’s Doll"}], mob:[{f:"ms_m5_01.jpg",n:"Castoff Baby Ghost"}]},
   {name:"Event Quest 8 — 1st Job Change", lvl:"Lv 30",
    steps:[T("geum",1,"Talk"), A("Try to get \"Demon Commander’s Head\" from Demon Commander first, to save a trip"), T("geum",28,"Talk"), A("Find \"Demon Commander’s Head\" if you don’t have it yet"), T("geum",28,"Turn in — pick your job")],
    reward:"10,000 XP + 1st Job Change", item:[{f:"ev4.png",n:"1x Demon Commander’s Head"}], mob:[{f:"ms_m3_11.jpg",n:"Demon Commander"}]},
-  {name:"Event Quest 9 — Trinket’s Quest", lvl:"Lv 30",
-   steps:[T("fort",59,"Talk"), T("fort",16,"Talk"), A("Kill Ghosts for 100x \"Sealed Talisman with Spirits\""), T("fort",16,"Report"), T("fort",20,"Talk"), T("fort",23,"Talk"), T("fort",6,"Talk"), T("fort",5,"Talk"), T("fort",20,"Talk"), A("Kill different devil soldiers for their head"), T("fort",20,"Turn in (talk twice)")],
-   reward:"~24,000 XP + Apprentice Trinket",
+  {name:"Quest 24 & Event Quest 9", lvl:"Lv 30",
+   steps:[T("fort",51,"Talk"), T("fort",59,"Talk"), T("fort",16,"Talk"), T("wild","p7","Talk"), A("Kill Ghosts for \"Moon-Hee’s Doll\" + 100x \"Sealed Talisman with Spirits\" (same mob family — farm together)"), T("wild","p7","Turn in \"Moon-Hee’s Doll\""), T("fort",16,"Report"), T("fort",20,"Talk"), T("fort",23,"Talk"), T("fort",6,"Talk"), T("fort",5,"Talk"), T("fort",20,"Talk"), A("Kill different devil soldiers for their head"), T("fort",20,"Turn in (talk twice)")],
+   reward:"~30,000 XP, 1 Contribution Point (Quest 24) + ~24,000 XP + Apprentice Trinket (Event Quest 9)",
    item:[
-     [{f:"",n:"100x Sealed Talisman with Spirits"}],
+     [{f:"24.png",n:"1x Moon-Hee’s Doll"}, {f:"",n:"100x Sealed Talisman with Spirits"}],
      [{f:"",n:"1x Devil Soldier Head"}, {f:"",n:"1x Devil Soldier with Twin Blades Head"}, {f:"",n:"1x Devil Soldier With Bow Head"}, {f:"",n:"1x Devil Soldier with Sword Head"}, {f:"",n:"1x Devil Soldier With Spear Head"}, {f:"",n:"1x 2nd Devil Soldier Head"}, {f:"",n:"1x 1st Devil Soldier Head"}]
    ],
    mob:[
@@ -857,7 +854,7 @@ const QUESTS = [
      [{f:"ms_m6_01.jpg",n:"Devil Soldier"}, {f:"ms_m6_02b.jpg",n:"Devil Soldier with Twin Blades"}, {f:"ms_m6_03.jpg",n:"Devil Soldier With Bow"}, {f:"ms_m6_04.jpg",n:"Devil Soldier with Sword"}, {f:"ms_m6_05.jpg",n:"Devil Soldier With Spear"}, {f:"ms_m6_06.jpg",n:"2nd Devil Soldier"}, {f:"ms_m6_07.jpg",n:"1st Devil Soldier"}]
    ]}
 ]},
-{id:"s2-3", stageTitle:"Stage 16 — Ghost beads at the Fort", lvl:"Lv 31-34", where:"Temporary Fort of Geum-Ohee Castle, one side-trip to Geum-Oh Mine.", quests:[
+{id:"s2-3", stageTitle:"Stage 16 — Ghost beads at the Fort", lvl:"Lv 31-34", where:"Temporary Fort of Geum-Ohee Castle, one side-trip to Geum-Oh Mine.", combo:"From here on out there’s roughly a quest every level. You can either do them one by one as they unlock and grind the small gap to the next level, or grind on purple mobs for a stretch and come back to clear a batch of quests together later.", quests:[
   {name:"Quest 25", lvl:"Lv 31",
    steps:[T("fort",49,"Talk"), A("Kill Ghost Of Young Man for \"Wolf Tooth Necklace\""), T("fort",49,"Turn in")],
    reward:"~35,000 XP, 1 Contribution Point", item:[{f:"25.png",n:"1x Wolf Tooth Necklace"}], mob:[{f:"ms_m5_02.jpg",n:"Ghost Of Young Man"}]},

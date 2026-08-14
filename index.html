@@ -55,17 +55,6 @@
   #char-add-btn:hover{background:var(--green); color:#0f1b0f; border-color:var(--green);}
   #char-delete-btn:hover{background:var(--red); color:#fff; border-color:var(--red);}
   #char-rename-btn:hover{background:var(--gold); color:#241b12; border-color:var(--gold-bright);}
-  nav{
-    position:sticky; top:0; z-index:50; display:flex; flex-wrap:wrap; gap:8px;
-    justify-content:center; padding:10px 12px; background:#0f0b07;
-    border-bottom:2px solid var(--gold); box-shadow:0 4px 10px rgba(0,0,0,.4);
-  }
-  nav a{
-    color:var(--gold-bright); text-decoration:none; font-size:.85em;
-    padding:6px 10px; border:1px solid #4a3620; border-radius:6px; background:#241b12;
-  }
-  nav a:hover{background:#3a2a15;}
-  nav a.active{background:var(--gold); color:#241b12; border-color:var(--gold-bright);}
   main{max-width:1800px; margin:0 auto; padding:24px 16px 80px;}
   section{margin-bottom:46px;}
   .layout{display:flex; align-items:flex-start; gap:28px;}
@@ -207,16 +196,6 @@
     padding:14px 16px; width:150px; display:flex; flex-direction:column; align-items:center; gap:6px;
   }
   .teleport-card .dest{font-size:.82em; color:var(--gold-bright); text-align:center; margin-top:2px;}
-  .skill-list{display:flex; flex-direction:column; gap:8px; margin-top:14px;}
-  .skill-item{
-    display:flex; align-items:center; justify-content:space-between; gap:12px;
-    background:var(--panel); border:1px solid #4a3620; border-radius:8px;
-    padding:10px 14px; cursor:pointer; transition:background .15s ease, border-color .15s ease;
-  }
-  .skill-item:hover{background:#3a2a15; border-color:var(--gold);}
-  .skill-item .sk-name{color:var(--gold-bright); font-weight:700; white-space:nowrap;}
-  .skill-item .sk-item{color:var(--muted); font-size:.88em; flex:1; text-align:right;}
-  .skill-item .sk-arrow{color:var(--gold); font-size:1.1em;}
 
   .qcard.flash{ animation:pulseCard 2.6s ease-out; }
   @keyframes pulseCard{
@@ -375,8 +354,6 @@
     #progress-text{font-size:.72em;}
     #reset-progress-btn{font-size:.7em; padding:4px 9px;}
     #char-select{font-size:.7em; max-width:100px;}
-    nav{padding:8px 8px; gap:6px;}
-    nav a{font-size:.75em; padding:5px 8px;}
     main{padding:16px 10px 60px;}
     section{margin-bottom:32px;}
     h2{font-size:1.15em;}
@@ -441,13 +418,6 @@
   </div>
 </header>
 
-<nav>
-  <a href="#howto">Instructions</a>
-  <a href="#teleports">Teleports</a>
-  <a href="#skillpoints" id="nav-skillpoints">Skill Points</a>
-  <a href="#walkthrough">Full walkthrough</a>
-</nav>
-
 <main>
 
 <div class="layout">
@@ -463,12 +433,6 @@
       <h2>Useful Teleports</h2>
       <div class="where">6 doggebi scattered around the world will teleport you straight to handy leveling areas — not tied to any quest, just worth knowing about. Click a pin chip to find it on the map, same as any NPC.</div>
       <div id="teleport-list" class="teleport-list"></div>
-    </section>
-
-    <section id="skillpoints" style="display:none">
-      <h2>Quests That Give Skill Points</h2>
-      <div class="where">Every quest below hands you at least 1 Skill Point on turn-in. Click one to jump straight to it in the Full Walkthrough.</div>
-      <div id="skill-list" class="skill-list"></div>
     </section>
 
     <section id="walkthrough">
@@ -1709,47 +1673,8 @@ function buildTeleportsSection(){
   });
 }
 
-function firstItemLabel(item){
-  if(!item) return '';
-  const flat = [];
-  const walk = (arr)=>{
-    if(!Array.isArray(arr)) return;
-    arr.forEach(x=>{
-      if(Array.isArray(x)) walk(x);
-      else if(x && x.n) flat.push(x.n);
-    });
-  };
-  walk(item);
-  if(!flat.length) return '';
-  return flat[0].replace(/^\d+x\s*/,'');
-}
-
-function buildSkillPointSection(){
-  const list = document.getElementById('skill-list');
-  if(!list) return;
-  QUESTS.forEach(stage=>{
-    stage.quests.forEach((q,qIndex)=>{
-      if(!/Skill Point/i.test(q.reward||'')) return;
-      const row = el('div','skill-item');
-      const label = firstItemLabel(q.item);
-      row.innerHTML = `<span class="sk-name">${q.name}</span><span class="sk-item">${label}</span><span class="sk-arrow">\u2192</span>`;
-      row.addEventListener('click', ()=> jumpToQuestCard(stage.id, qIndex));
-      list.appendChild(row);
-    });
-  });
-}
-
-function jumpToQuestCard(stageId, qIndex){
-  const card = document.getElementById(`qcard-${stageId}-${qIndex}`);
-  if(!card) return;
-  if(card.classList.contains('done')) card.classList.add('peek');
-  safeScroll(card, {behavior:'smooth', block:'center'});
-  pulse(card, 'flash', 2600);
-}
-
 function render(){
   buildTeleportsSection();
-  buildSkillPointSection();
   const container = document.getElementById('stages');
   QUESTS.forEach(stage=>{
     const s = el('div','stage');
@@ -1893,18 +1818,6 @@ if(worldMapImgEl){
   worldMapImgEl.addEventListener('click', (e)=>{ e.stopPropagation(); openLightbox(worldMapImgEl.src, true); });
 }
 document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
-const navSkillPoints = document.getElementById('nav-skillpoints');
-const skillPointsSection = document.getElementById('skillpoints');
-if(navSkillPoints && skillPointsSection){
-  navSkillPoints.addEventListener('click', (e)=>{
-    e.preventDefault();
-    const opening = skillPointsSection.style.display === 'none';
-    skillPointsSection.style.display = opening ? 'block' : 'none';
-    navSkillPoints.classList.toggle('active', opening);
-    if(opening) safeScroll(skillPointsSection, {behavior:'smooth', block:'start'});
-  });
-}
-
 const pingFilterAllLink = document.getElementById('ping-filter-all');
 if(pingFilterAllLink){
   pingFilterAllLink.addEventListener('click', (e)=>{

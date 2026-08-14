@@ -165,8 +165,9 @@
   }
   .stage.stage-flash{ animation:stageCompleteFlash .6s ease; }
   .stage.leaving{
-    opacity:0 !important; transform:scaleY(0);
-    transition:opacity .48s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1);
+    opacity:0 !important; transform:scaleY(.85);
+    margin-bottom:0 !important;
+    transition:max-height .52s cubic-bezier(.4,0,.2,1), opacity .44s cubic-bezier(.4,0,.2,1), transform .48s cubic-bezier(.4,0,.2,1), margin-bottom .52s cubic-bezier(.4,0,.2,1);
   }
   .stage h3{
     margin:0 0 6px; color:var(--gold-bright); font-size:1.25em;
@@ -194,8 +195,10 @@
     transform-origin:top center;
   }
   .qcard.leaving{
-    transition:opacity .42s cubic-bezier(.4,0,.2,1), transform .48s cubic-bezier(.4,0,.2,1);
-    opacity:0 !important; transform:scaleY(0); pointer-events:none;
+    transition:max-height .48s cubic-bezier(.4,0,.2,1), opacity .4s cubic-bezier(.4,0,.2,1), transform .44s cubic-bezier(.4,0,.2,1), margin-top .48s cubic-bezier(.4,0,.2,1), margin-bottom .48s cubic-bezier(.4,0,.2,1), padding-top .48s cubic-bezier(.4,0,.2,1), padding-bottom .48s cubic-bezier(.4,0,.2,1);
+    opacity:0 !important; transform:scaleY(.85); pointer-events:none;
+    margin-top:0 !important; margin-bottom:0 !important;
+    padding-top:0 !important; padding-bottom:0 !important;
   }
   .teleport-list{display:flex; flex-wrap:wrap; gap:14px; margin-top:14px;}
   .teleport-card{
@@ -1511,15 +1514,24 @@ function buildQuestCard(q, stageId, qIndex){
 
 function collapseCardAnimated(card, onDone){
   card.classList.add('leaving');
+  const startHeight = card.scrollHeight;
+  card.style.overflow = 'hidden';
+  card.style.maxHeight = startHeight + 'px';
+  void card.offsetHeight;
+  requestAnimationFrame(()=>{
+    card.style.maxHeight = '0px';
+  });
   let done = false;
   const finish = ()=>{
     if(done) return; done = true;
     card.style.display = 'none';
     card.classList.remove('leaving');
+    card.style.maxHeight = '';
+    card.style.overflow = '';
     if(onDone) onDone();
   };
-  card.addEventListener('transitionend', (e)=>{ if(e.propertyName==='transform') finish(); }, {once:true});
-  setTimeout(finish, 550);
+  card.addEventListener('transitionend', (e)=>{ if(e.propertyName==='max-height') finish(); }, {once:true});
+  setTimeout(finish, 560);
 }
 
 function flashStageComplete(stageEl, onDone){
@@ -1535,15 +1547,24 @@ function flashStageComplete(stageEl, onDone){
 }
 
 function collapseStageAnimated(stageEl, onDone){
+  const startHeight = stageEl.scrollHeight;
+  stageEl.style.overflow = 'hidden';
+  stageEl.style.maxHeight = startHeight + 'px';
+  void stageEl.offsetHeight;
   stageEl.classList.add('leaving');
+  requestAnimationFrame(()=>{
+    stageEl.style.maxHeight = '0px';
+  });
   let done = false;
   const finish = ()=>{
     if(done) return; done = true;
     stageEl.style.display = 'none';
     stageEl.classList.remove('leaving');
+    stageEl.style.maxHeight = '';
+    stageEl.style.overflow = '';
     if(onDone) onDone();
   };
-  stageEl.addEventListener('transitionend', (e)=>{ if(e.propertyName==='transform') finish(); }, {once:true});
+  stageEl.addEventListener('transitionend', (e)=>{ if(e.propertyName==='max-height') finish(); }, {once:true});
   setTimeout(finish, 600);
 }
 

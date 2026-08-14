@@ -157,7 +157,7 @@
     margin-right:6px; padding:0 4px;
   }
   .pin-legend .num.monster{background:#e07b2a;}
-  .stage{margin-bottom:34px; transform-origin:top center;}
+  .stage{margin-bottom:34px; transform-origin:top center; display:flow-root;}
   @keyframes stageCompleteFlash{
     0%{ box-shadow:0 0 0 0 rgba(224,184,60,0); }
     35%{ box-shadow:0 0 26px 6px rgba(224,184,60,.4); }
@@ -165,9 +165,9 @@
   }
   .stage.stage-flash{ animation:stageCompleteFlash .6s ease; }
   .stage.leaving{
-    opacity:0 !important; transform:scaleY(.85);
+    opacity:0 !important;
     margin-bottom:0 !important;
-    transition:max-height .52s cubic-bezier(.4,0,.2,1), opacity .44s cubic-bezier(.4,0,.2,1), transform .48s cubic-bezier(.4,0,.2,1), margin-bottom .52s cubic-bezier(.4,0,.2,1);
+    transition:max-height .52s cubic-bezier(.4,0,.2,1), opacity .44s cubic-bezier(.4,0,.2,1), margin-bottom .52s cubic-bezier(.4,0,.2,1);
   }
   .stage h3{
     margin:0 0 6px; color:var(--gold-bright); font-size:1.25em;
@@ -195,10 +195,11 @@
     transform-origin:top center;
   }
   .qcard.leaving{
-    transition:max-height .48s cubic-bezier(.4,0,.2,1), opacity .4s cubic-bezier(.4,0,.2,1), transform .44s cubic-bezier(.4,0,.2,1), margin-top .48s cubic-bezier(.4,0,.2,1), margin-bottom .48s cubic-bezier(.4,0,.2,1), padding-top .48s cubic-bezier(.4,0,.2,1), padding-bottom .48s cubic-bezier(.4,0,.2,1);
+    transition:max-height .48s cubic-bezier(.4,0,.2,1), opacity .4s cubic-bezier(.4,0,.2,1), transform .44s cubic-bezier(.4,0,.2,1), margin-top .48s cubic-bezier(.4,0,.2,1), margin-bottom .48s cubic-bezier(.4,0,.2,1), padding-top .48s cubic-bezier(.4,0,.2,1), padding-bottom .48s cubic-bezier(.4,0,.2,1), border-width .48s cubic-bezier(.4,0,.2,1);
     opacity:0 !important; transform:scaleY(.85); pointer-events:none;
     margin-top:0 !important; margin-bottom:0 !important;
     padding-top:0 !important; padding-bottom:0 !important;
+    border-width:0 !important;
   }
   .teleport-list{display:flex; flex-wrap:wrap; gap:14px; margin-top:14px;}
   .teleport-card{
@@ -1514,7 +1515,7 @@ function buildQuestCard(q, stageId, qIndex){
 
 function collapseCardAnimated(card, onDone){
   card.classList.add('leaving');
-  const startHeight = card.scrollHeight;
+  const startHeight = card.getBoundingClientRect().height;
   card.style.overflow = 'hidden';
   card.style.maxHeight = startHeight + 'px';
   void card.offsetHeight;
@@ -1524,11 +1525,14 @@ function collapseCardAnimated(card, onDone){
   let done = false;
   const finish = ()=>{
     if(done) return; done = true;
-    card.style.display = 'none';
-    card.classList.remove('leaving');
-    card.style.maxHeight = '';
-    card.style.overflow = '';
-    if(onDone) onDone();
+    card.style.maxHeight = '0px';
+    requestAnimationFrame(()=>{
+      card.style.display = 'none';
+      card.classList.remove('leaving');
+      card.style.maxHeight = '';
+      card.style.overflow = '';
+      if(onDone) onDone();
+    });
   };
   card.addEventListener('transitionend', (e)=>{ if(e.propertyName==='max-height') finish(); }, {once:true});
   setTimeout(finish, 560);
@@ -1547,7 +1551,7 @@ function flashStageComplete(stageEl, onDone){
 }
 
 function collapseStageAnimated(stageEl, onDone){
-  const startHeight = stageEl.scrollHeight;
+  const startHeight = stageEl.getBoundingClientRect().height;
   stageEl.style.overflow = 'hidden';
   stageEl.style.maxHeight = startHeight + 'px';
   void stageEl.offsetHeight;
@@ -1558,11 +1562,14 @@ function collapseStageAnimated(stageEl, onDone){
   let done = false;
   const finish = ()=>{
     if(done) return; done = true;
-    stageEl.style.display = 'none';
-    stageEl.classList.remove('leaving');
-    stageEl.style.maxHeight = '';
-    stageEl.style.overflow = '';
-    if(onDone) onDone();
+    stageEl.style.maxHeight = '0px';
+    requestAnimationFrame(()=>{
+      stageEl.style.display = 'none';
+      stageEl.classList.remove('leaving');
+      stageEl.style.maxHeight = '';
+      stageEl.style.overflow = '';
+      if(onDone) onDone();
+    });
   };
   stageEl.addEventListener('transitionend', (e)=>{ if(e.propertyName==='max-height') finish(); }, {once:true});
   setTimeout(finish, 600);

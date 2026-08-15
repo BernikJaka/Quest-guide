@@ -2004,9 +2004,16 @@ render();
     if(hint) hint.textContent = 'Click map or press Esc to shrink';
   }
 
+  // Click-to-enlarge is desktop-only: moving the live map into the full-screen overlay
+  // was throwing pin positions off on mobile browsers, and phones can already pinch-zoom
+  // the small map natively, so there's no need for it there anyway. Same breakpoint the
+  // rest of the page's mobile CSS uses.
+  const mobileEnlargeDisabled = window.matchMedia('(max-width:640px)').matches;
+
   enlargeableCities.forEach(city=>{
     const wrap = document.getElementById('map-'+city+'-img');
     if(!wrap) return;
+    if(mobileEnlargeDisabled) return;
     wrap.classList.add('pin-map');
     const hint = el('div','map-click-hint','Click map to enlarge');
     wrap.appendChild(hint);
